@@ -31,7 +31,8 @@
                                         </template>
                                         <span>Editar</span>
                                     </v-tooltip>
-                                    <show-employee-component :visible="showEmployee" @close="showEmployee=false"></show-employee-component>
+                                    <!-- <show-employee-component :visible="showEmployee" @close="showEmployee=false"></show-employee-component> -->
+                                    <v-btn text icon @click="dialog = true" color="green"><v-icon>mdi-eye</v-icon></v-btn>
                                 </td>
                             </tr>
                         </tbody>
@@ -42,8 +43,8 @@
                 </v-card>    
             </div>
         </div>
-    </div>   
-    
+        <show-employee-component v-model="dialog" visible="true" />
+    </div>
 </template>
 
 <script>

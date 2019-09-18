@@ -1896,7 +1896,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     source: String
@@ -1919,7 +1918,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -2070,6 +2068,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2151,20 +2150,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['visible'],
-  computed: {
-    show: {
-      get: function get() {
-        return this.visible;
-      },
-      set: function set(value) {
-        if (!value) {
-          this.$emit('close');
-        }
-      }
+  props: {
+    valor: {
+      type: String,
+      "default": "nada"
     }
+  },
+  data: function data() {
+    return {
+      dialog: false
+    };
+  },
+  created: function created() {
+    console.log(this.valor);
   }
 });
 
@@ -38112,7 +38111,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-list-item-content",
-                    [_c("v-list-item-title", [_vm._v("Home")])],
+                    [_c("v-list-item-title", [_vm._v("Inicio")])],
                     1
                   )
                 ],
@@ -38131,7 +38130,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-list-item-content",
-                    [_c("v-list-item-title", [_vm._v("Contact")])],
+                    [_c("v-list-item-title", [_vm._v("Empleados")])],
                     1
                   )
                 ],
@@ -38480,128 +38479,153 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-8" },
-        [
-          _c(
-            "v-card",
-            { staticClass: "mx-auto" },
-            [
-              _c("v-card-title", [_vm._v("Listado de empleados")]),
-              _vm._v(" "),
-              _c("v-simple-table", [
-                _c("thead", [
-                  _c("tr", [
-                    _c("th", [_vm._v("Empleado")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Documento")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Salario")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Cargo")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Área")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Acciones")])
-                  ])
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-8" },
+          [
+            _c(
+              "v-card",
+              { staticClass: "mx-auto" },
+              [
+                _c("v-card-title", [_vm._v("Listado de empleados")]),
+                _vm._v(" "),
+                _c("v-simple-table", [
+                  _c("thead", [
+                    _c("tr", [
+                      _c("th", [_vm._v("Empleado")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Documento")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Salario")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Cargo")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Área")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Acciones")])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.employees, function(item) {
+                      return _c("tr", { key: item.id }, [
+                        _c("td", { staticClass: "text-left" }, [
+                          _vm._v(
+                            _vm._s(item.name) + " " + _vm._s(item.last_name)
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-left" }, [
+                          _vm._v(_vm._s(item.document))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-left" }, [
+                          _vm._v(_vm._s(item.salary))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-left" }, [
+                          _vm._v(_vm._s(item.position))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-left" }, [
+                          _vm._v(_vm._s(item.area))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          { staticClass: "text-left" },
+                          [
+                            _c(
+                              "v-tooltip",
+                              {
+                                attrs: { right: "" },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "activator",
+                                      fn: function(ref) {
+                                        var on = ref.on
+                                        return [
+                                          _c(
+                                            "v-btn",
+                                            _vm._g(
+                                              {
+                                                attrs: {
+                                                  text: "",
+                                                  icon: "",
+                                                  color: "blue"
+                                                }
+                                              },
+                                              on
+                                            ),
+                                            [
+                                              _c("v-icon", [
+                                                _vm._v("mdi-pencil")
+                                              ])
+                                            ],
+                                            1
+                                          )
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              },
+                              [_vm._v(" "), _c("span", [_vm._v("Editar")])]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: { text: "", icon: "", color: "green" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.dialog = true
+                                  }
+                                }
+                              },
+                              [_c("v-icon", [_vm._v("mdi-eye")])],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ])
+                    }),
+                    0
+                  )
                 ]),
                 _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.employees, function(item) {
-                    return _c("tr", { key: item.id }, [
-                      _c("td", { staticClass: "text-left" }, [
-                        _vm._v(_vm._s(item.name) + " " + _vm._s(item.last_name))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-left" }, [
-                        _vm._v(_vm._s(item.document))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-left" }, [
-                        _vm._v(_vm._s(item.salary))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-left" }, [
-                        _vm._v(_vm._s(item.position))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-left" }, [
-                        _vm._v(_vm._s(item.area))
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "text-left" },
-                        [
-                          _c(
-                            "v-tooltip",
-                            {
-                              attrs: { right: "" },
-                              scopedSlots: _vm._u(
-                                [
-                                  {
-                                    key: "activator",
-                                    fn: function(ref) {
-                                      var on = ref.on
-                                      return [
-                                        _c(
-                                          "v-btn",
-                                          _vm._g(
-                                            {
-                                              attrs: {
-                                                text: "",
-                                                icon: "",
-                                                color: "blue"
-                                              }
-                                            },
-                                            on
-                                          ),
-                                          [
-                                            _c("v-icon", [_vm._v("mdi-pencil")])
-                                          ],
-                                          1
-                                        )
-                                      ]
-                                    }
-                                  }
-                                ],
-                                null,
-                                true
-                              )
-                            },
-                            [_vm._v(" "), _c("span", [_vm._v("Editar")])]
-                          ),
-                          _vm._v(" "),
-                          _c("show-employee-component", {
-                            attrs: { visible: _vm.showEmployee },
-                            on: {
-                              close: function($event) {
-                                _vm.showEmployee = false
-                              }
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    ])
-                  }),
-                  0
-                )
-              ]),
-              _vm._v(" "),
-              _c("v-card-actions", [_c("create-employee-component")], 1)
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ])
-  ])
+                _c("v-card-actions", [_c("create-employee-component")], 1)
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("show-employee-component", {
+        attrs: { visible: "true" },
+        model: {
+          value: _vm.dialog,
+          callback: function($$v) {
+            _vm.dialog = $$v
+          },
+          expression: "dialog"
+        }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38675,13 +38699,11 @@ var render = function() {
   return _c(
     "v-dialog",
     {
-      attrs: { "max-width": "500px" },
-      model: {
-        value: _vm.show,
-        callback: function($$v) {
-          _vm.show = $$v
-        },
-        expression: "show"
+      attrs: { value: _vm.value },
+      on: {
+        input: function($event) {
+          return _vm.$emit("input")
+        }
       }
     },
     [
@@ -38689,23 +38711,16 @@ var render = function() {
         "v-card",
         [
           _c(
-            "v-card-actions",
-            [
-              _c(
-                "v-btn",
-                {
-                  attrs: { color: "primary", flat: "" },
-                  on: {
-                    click: function($event) {
-                      $event.stopPropagation()
-                      _vm.show = false
-                    }
-                  }
-                },
-                [_vm._v("Close")]
-              )
-            ],
-            1
+            "v-btn",
+            {
+              attrs: { color: "red" },
+              nativeOn: {
+                click: function($event) {
+                  return _vm.$emit("input")
+                }
+              }
+            },
+            [_vm._v("Close")]
           )
         ],
         1
@@ -90469,15 +90484,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*******************************************************!*\
   !*** ./resources/js/components/EmployeeComponent.vue ***!
   \*******************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _EmployeeComponent_vue_vue_type_template_id_20dc3794___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmployeeComponent.vue?vue&type=template&id=20dc3794& */ "./resources/js/components/EmployeeComponent.vue?vue&type=template&id=20dc3794&");
 /* harmony import */ var _EmployeeComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmployeeComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/EmployeeComponent.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _EmployeeComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _EmployeeComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -90507,7 +90521,7 @@ component.options.__file = "resources/js/components/EmployeeComponent.vue"
 /*!********************************************************************************!*\
   !*** ./resources/js/components/EmployeeComponent.vue?vue&type=script&lang=js& ***!
   \********************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

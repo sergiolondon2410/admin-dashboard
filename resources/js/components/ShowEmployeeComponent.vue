@@ -1,27 +1,27 @@
+
 <template>
-<v-dialog v-model="show" max-width="500px">
-  <v-card>
-    <v-card-actions>
-      <v-btn color="primary" flat @click.stop="show=false">Close</v-btn>
-    </v-card-actions>
-  </v-card>
-</v-dialog>
+    <v-dialog :value="value" @input="$emit('input')">
+      <v-card>         
+        <v-btn color="red" @click.native="$emit('input')">Close</v-btn>
+      </v-card>
+    </v-dialog>
 </template>
 
 <script>
 export default {
-  props: ['visible'],
-  computed: {
-    show: {
-      get () {
-        return this.visible
+    props: {
+      valor: {
+        type: String,
+        default: "nada"
       },
-      set (value) {
-        if (!value) {
-          this.$emit('close')
+    },
+    data(){
+        return {
+            dialog: false
         }
-      }
-    }
-  }
+    },
+    created(){
+        console.log(this.valor)
+    },
 }
 </script>
