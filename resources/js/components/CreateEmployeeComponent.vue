@@ -36,8 +36,8 @@
                     </v-row>
                 </v-container>
                 <small>* campos obligatorios</small>
-                
             </v-card-text>
+            <v-divider></v-divider>
             <v-card-actions>
                 <div class="flex-grow-1"></div>
                 <v-btn color="red darken-1" text @click="dialog = false">Cancelar</v-btn>
@@ -71,7 +71,6 @@
                 alert('Debes completar todos los campos antes de guardar');
                 return;
             }
-            console.log(this.employee);
             const newEmployee = this.employee;
             this.employee = {
                 name: '',
@@ -84,7 +83,8 @@
             };    
             axios.post('/api/store_employee', newEmployee).then((res) =>{
                 const employeeSend = res.data;
-                // this.employees.push(employeeSend);
+                this.$emit('add-employee', employeeSend);
+                this.dialog = false;
             })
         },
     }

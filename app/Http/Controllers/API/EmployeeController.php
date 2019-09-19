@@ -20,14 +20,7 @@ class EmployeeController extends Controller
         $area = (is_null($request->area)) ? 'Operativa' : $request->area;
 
         // $data = new Employee();
-        // $data->name = ucwords(strtolower($request->name));
-        // $data->last_name = ucwords(strtolower($request->last_name));
-        // $data->document = $request->document;
-        // $data->email = $request->email;
-        // $data->position = $request->position;
-        // $data->area = $request->area;
-        // $data->salary = $request->salary;
-        // $data->save();
+        // 
 
         $data = Employee::create([
             'name' => ucwords(strtolower($request->name)),
@@ -38,6 +31,21 @@ class EmployeeController extends Controller
             'area' => ucwords(strtolower($area)),
             'salary' => $request->salary,
         ]);
+        
+        return $data;
+    }
+
+    public function update(Request $request)
+    {
+        $data = Employee::find($request->id);
+        $data->name = ucwords(strtolower($request->name));
+        $data->last_name = ucwords(strtolower($request->last_name));
+        $data->document = $request->document;
+        $data->email = $request->email;
+        $data->position = $request->position;
+        $data->area = $request->area;
+        $data->salary = $request->salary;
+        $data->save();
         
         return $data;
     }

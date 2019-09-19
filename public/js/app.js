@@ -1986,12 +1986,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     createEmployee: function createEmployee() {
+      var _this = this;
+
       if (this.employee.name.trim() === '' || this.employee.last_name.trim() === '' || this.employee.document.trim() === '' || this.employee.email.trim() === '' || this.employee.position.trim() === '' || this.employee.area.trim() === '' || this.employee.salary.trim() === '') {
         alert('Debes completar todos los campos antes de guardar');
         return;
       }
 
-      console.log(this.employee);
       var newEmployee = this.employee;
       this.employee = {
         name: '',
@@ -2003,7 +2004,11 @@ __webpack_require__.r(__webpack_exports__);
         salary: ''
       };
       axios.post('/api/store_employee', newEmployee).then(function (res) {
-        var employeeSend = res.data; // this.employees.push(employeeSend);
+        var employeeSend = res.data;
+
+        _this.$emit('add-employee', employeeSend);
+
+        _this.dialog = false;
       });
     }
   }
@@ -2069,6 +2074,64 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2082,7 +2145,9 @@ __webpack_require__.r(__webpack_exports__);
         salary: ''
       },
       employees: [],
-      showEmployee: false
+      showDetail: false,
+      newEmployee: false,
+      editEmployeeForm: false
     };
   },
   created: function created() {
@@ -2093,7 +2158,43 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    addEmployee: function addEmployee() {}
+    showEmployee: function showEmployee(item) {
+      this.showDetail = true;
+      this.employee = item;
+    },
+    addEmployee: function addEmployee(item) {
+      this.employees.push(item);
+    },
+    editEmployee: function editEmployee(item) {
+      this.editEmployeeForm = true;
+      this.employee = item;
+    },
+    updateEmployee: function updateEmployee(item) {
+      var _this2 = this;
+
+      if (this.employee.name.trim() === '' || this.employee.last_name.trim() === '' || this.employee.document.trim() === '' || this.employee.email.trim() === '' || this.employee.position.trim() === '' || this.employee.area.trim() === '') {
+        alert('Debes completar todos los campos antes de guardar');
+        return;
+      }
+
+      console.log(this.employee.name);
+      var updatedEmployee = this.employee;
+      this.employee = {
+        name: '',
+        last_name: '',
+        document: '',
+        email: '',
+        position: '',
+        area: '',
+        salary: ''
+      };
+      axios.put('/api/update_employee', updatedEmployee).then(function (res) {
+        _this2.employees = _this2.employees.map(function (employee) {
+          return employee.id === id ? res.data : employee;
+        });
+        _this2.editEmployeeForm = false;
+      });
+    }
   }
 });
 
@@ -2127,43 +2228,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Component mounted.');
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ShowEmployeeComponent.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ShowEmployeeComponent.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    valor: {
-      type: String,
-      "default": "nada"
-    }
-  },
-  data: function data() {
-    return {
-      dialog: false
-    };
-  },
-  created: function created() {
-    console.log(this.valor);
   }
 });
 
@@ -38414,6 +38478,8 @@ var render = function() {
                   1
                 ),
                 _vm._v(" "),
+                _c("v-divider"),
+                _vm._v(" "),
                 _c(
                   "v-card-actions",
                   [
@@ -38542,57 +38608,30 @@ var render = function() {
                           { staticClass: "text-left" },
                           [
                             _c(
-                              "v-tooltip",
-                              {
-                                attrs: { right: "" },
-                                scopedSlots: _vm._u(
-                                  [
-                                    {
-                                      key: "activator",
-                                      fn: function(ref) {
-                                        var on = ref.on
-                                        return [
-                                          _c(
-                                            "v-btn",
-                                            _vm._g(
-                                              {
-                                                attrs: {
-                                                  text: "",
-                                                  icon: "",
-                                                  color: "blue"
-                                                }
-                                              },
-                                              on
-                                            ),
-                                            [
-                                              _c("v-icon", [
-                                                _vm._v("mdi-pencil")
-                                              ])
-                                            ],
-                                            1
-                                          )
-                                        ]
-                                      }
-                                    }
-                                  ],
-                                  null,
-                                  true
-                                )
-                              },
-                              [_vm._v(" "), _c("span", [_vm._v("Editar")])]
-                            ),
-                            _vm._v(" "),
-                            _c(
                               "v-btn",
                               {
                                 attrs: { text: "", icon: "", color: "green" },
                                 on: {
                                   click: function($event) {
-                                    _vm.dialog = true
+                                    return _vm.showEmployee(item)
                                   }
                                 }
                               },
                               [_c("v-icon", [_vm._v("mdi-eye")])],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: { text: "", icon: "", color: "blue" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editEmployee(item)
+                                  }
+                                }
+                              },
+                              [_c("v-icon", [_vm._v("mdi-pencil")])],
                               1
                             )
                           ],
@@ -38604,6 +38643,8 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
+                _c("v-divider"),
+                _vm._v(" "),
                 _c("v-card-actions", [_c("create-employee-component")], 1)
               ],
               1
@@ -38613,16 +38654,320 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("show-employee-component", {
-        attrs: { visible: "true" },
-        model: {
-          value: _vm.dialog,
-          callback: function($$v) {
-            _vm.dialog = $$v
-          },
-          expression: "dialog"
-        }
-      })
+      _c(
+        "v-dialog",
+        {
+          attrs: { "max-width": "500px" },
+          model: {
+            value: _vm.showDetail,
+            callback: function($$v) {
+              _vm.showDetail = $$v
+            },
+            expression: "showDetail"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", [
+                _vm._v(
+                  _vm._s(_vm.employee.name) +
+                    " " +
+                    _vm._s(_vm.employee.last_name)
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c(
+                    "v-row",
+                    [
+                      _c("v-col", [
+                        _vm._v("Email: " + _vm._s(_vm.employee.email))
+                      ]),
+                      _vm._v(" "),
+                      _c("v-col", [
+                        _vm._v("Documento: " + _vm._s(_vm.employee.document))
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-row",
+                    [
+                      _c("v-col", [
+                        _vm._v("Cargo: " + _vm._s(_vm.employee.position))
+                      ]),
+                      _vm._v(" "),
+                      _c("v-col", [
+                        _vm._v("Área: " + _vm._s(_vm.employee.area))
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-row",
+                    [
+                      _c("v-col", [
+                        _vm._v("Salario: " + _vm._s(_vm.employee.salary))
+                      ])
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "red darken-1", text: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.showDetail = false
+                        },
+                        "add-employee": _vm.addEmployee
+                      }
+                    },
+                    [_vm._v("Cerrar")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: { persistent: "", "max-width": "600px" },
+          model: {
+            value: _vm.editEmployeeForm,
+            callback: function($$v) {
+              _vm.editEmployeeForm = $$v
+            },
+            expression: "editEmployeeForm"
+          }
+        },
+        [
+          _c("v-card", [
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.updateEmployee($event)
+                  }
+                }
+              },
+              [
+                _c("v-card-title", [
+                  _c("span", { staticClass: "headline" }, [
+                    _vm._v("Editar empleado")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "v-card-text",
+                  [
+                    _c(
+                      "v-container",
+                      [
+                        _c(
+                          "v-row",
+                          [
+                            _c(
+                              "v-col",
+                              { attrs: { cols: "12", sm: "6" } },
+                              [
+                                _c("v-text-field", {
+                                  attrs: { label: "* Nombre", required: "" },
+                                  model: {
+                                    value: _vm.employee.name,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.employee, "name", $$v)
+                                    },
+                                    expression: "employee.name"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-col",
+                              { attrs: { cols: "12", sm: "6" } },
+                              [
+                                _c("v-text-field", {
+                                  attrs: { label: "* Apellidos", required: "" },
+                                  model: {
+                                    value: _vm.employee.last_name,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.employee, "last_name", $$v)
+                                    },
+                                    expression: "employee.last_name"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-col",
+                              { attrs: { cols: "12" } },
+                              [
+                                _c("v-text-field", {
+                                  attrs: { label: "* Email", required: "" },
+                                  model: {
+                                    value: _vm.employee.email,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.employee, "email", $$v)
+                                    },
+                                    expression: "employee.email"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-col",
+                              { attrs: { cols: "12", sm: "6" } },
+                              [
+                                _c("v-text-field", {
+                                  attrs: { label: "* Documento", required: "" },
+                                  model: {
+                                    value: _vm.employee.document,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.employee, "document", $$v)
+                                    },
+                                    expression: "employee.document"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-col",
+                              { attrs: { cols: "12", sm: "6" } },
+                              [
+                                _c("v-text-field", {
+                                  attrs: { label: "* Salario", required: "" },
+                                  model: {
+                                    value: _vm.employee.salary,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.employee, "salary", $$v)
+                                    },
+                                    expression: "employee.salary"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-col",
+                              { attrs: { cols: "12", sm: "6" } },
+                              [
+                                _c("v-text-field", {
+                                  attrs: { label: "Cargo" },
+                                  model: {
+                                    value: _vm.employee.position,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.employee, "position", $$v)
+                                    },
+                                    expression: "employee.position"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-col",
+                              { attrs: { cols: "12", sm: "6" } },
+                              [
+                                _c("v-text-field", {
+                                  attrs: { label: "Área" },
+                                  model: {
+                                    value: _vm.employee.area,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.employee, "area", $$v)
+                                    },
+                                    expression: "employee.area"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("small", [_vm._v("* campos obligatorios")])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("v-divider"),
+                _vm._v(" "),
+                _c(
+                  "v-card-actions",
+                  [
+                    _c("div", { staticClass: "flex-grow-1" }),
+                    _vm._v(" "),
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: { color: "red darken-1", text: "" },
+                        on: {
+                          click: function($event) {
+                            _vm.editEmployeeForm = false
+                          }
+                        }
+                      },
+                      [_vm._v("Cancelar")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: {
+                          color: "green darken-1",
+                          text: "",
+                          type: "submit"
+                        }
+                      },
+                      [_vm._v("Guardar cambios")]
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ])
+        ],
+        1
+      )
     ],
     1
   )
@@ -38675,61 +39020,6 @@ var staticRenderFns = [
     ])
   }
 ]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ShowEmployeeComponent.vue?vue&type=template&id=823963d2&":
-/*!************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ShowEmployeeComponent.vue?vue&type=template&id=823963d2& ***!
-  \************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-dialog",
-    {
-      attrs: { value: _vm.value },
-      on: {
-        input: function($event) {
-          return _vm.$emit("input")
-        }
-      }
-    },
-    [
-      _c(
-        "v-card",
-        [
-          _c(
-            "v-btn",
-            {
-              attrs: { color: "red" },
-              nativeOn: {
-                click: function($event) {
-                  return _vm.$emit("input")
-                }
-              }
-            },
-            [_vm._v("Close")]
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
 render._withStripped = true
 
 
@@ -90271,7 +90561,6 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 Vue.component('employee-component', __webpack_require__(/*! ./components/EmployeeComponent.vue */ "./resources/js/components/EmployeeComponent.vue")["default"]);
 Vue.component('baseline-component', __webpack_require__(/*! ./components/BaselineComponent.vue */ "./resources/js/components/BaselineComponent.vue")["default"]);
 Vue.component('create-employee-component', __webpack_require__(/*! ./components/CreateEmployeeComponent.vue */ "./resources/js/components/CreateEmployeeComponent.vue")["default"]);
-Vue.component('show-employee-component', __webpack_require__(/*! ./components/ShowEmployeeComponent.vue */ "./resources/js/components/ShowEmployeeComponent.vue")["default"]);
 var app = new Vue({
   el: '#app',
   vuetify: new vuetify__WEBPACK_IMPORTED_MODULE_1___default.a({
@@ -90613,75 +90902,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/ShowEmployeeComponent.vue":
-/*!***********************************************************!*\
-  !*** ./resources/js/components/ShowEmployeeComponent.vue ***!
-  \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ShowEmployeeComponent_vue_vue_type_template_id_823963d2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ShowEmployeeComponent.vue?vue&type=template&id=823963d2& */ "./resources/js/components/ShowEmployeeComponent.vue?vue&type=template&id=823963d2&");
-/* harmony import */ var _ShowEmployeeComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShowEmployeeComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ShowEmployeeComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ShowEmployeeComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ShowEmployeeComponent_vue_vue_type_template_id_823963d2___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ShowEmployeeComponent_vue_vue_type_template_id_823963d2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/ShowEmployeeComponent.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/ShowEmployeeComponent.vue?vue&type=script&lang=js&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/components/ShowEmployeeComponent.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEmployeeComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ShowEmployeeComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ShowEmployeeComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEmployeeComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/ShowEmployeeComponent.vue?vue&type=template&id=823963d2&":
-/*!******************************************************************************************!*\
-  !*** ./resources/js/components/ShowEmployeeComponent.vue?vue&type=template&id=823963d2& ***!
-  \******************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEmployeeComponent_vue_vue_type_template_id_823963d2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ShowEmployeeComponent.vue?vue&type=template&id=823963d2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ShowEmployeeComponent.vue?vue&type=template&id=823963d2&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEmployeeComponent_vue_vue_type_template_id_823963d2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEmployeeComponent_vue_vue_type_template_id_823963d2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

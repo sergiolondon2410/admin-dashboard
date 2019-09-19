@@ -14,7 +14,6 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('employee-component', require('./components/EmployeeComponent.vue').default);
 Vue.component('baseline-component', require('./components/BaselineComponent.vue').default);
 Vue.component('create-employee-component', require('./components/CreateEmployeeComponent.vue').default);
-Vue.component('show-employee-component', require('./components/ShowEmployeeComponent.vue').default);
 
 const app = new Vue({
     el: '#app',
