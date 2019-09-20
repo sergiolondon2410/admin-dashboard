@@ -2132,6 +2132,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2147,7 +2166,8 @@ __webpack_require__.r(__webpack_exports__);
       employees: [],
       showDetail: false,
       newEmployee: false,
-      editEmployeeForm: false
+      editEmployeeForm: false,
+      deleteEmployeeDialog: false
     };
   },
   created: function created() {
@@ -2169,7 +2189,7 @@ __webpack_require__.r(__webpack_exports__);
       this.editEmployeeForm = true;
       this.employee = item;
     },
-    updateEmployee: function updateEmployee(item) {
+    updateEmployee: function updateEmployee() {
       var _this2 = this;
 
       if (this.employee.name.trim() === '' || this.employee.last_name.trim() === '' || this.employee.document.trim() === '' || this.employee.email.trim() === '' || this.employee.position.trim() === '' || this.employee.area.trim() === '') {
@@ -2177,22 +2197,25 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      console.log(this.employee.name);
       var updatedEmployee = this.employee;
-      this.employee = {
-        name: '',
-        last_name: '',
-        document: '',
-        email: '',
-        position: '',
-        area: '',
-        salary: ''
-      };
       axios.put('/api/update_employee', updatedEmployee).then(function (res) {
-        _this2.employees = _this2.employees.map(function (employee) {
-          return employee.id === id ? res.data : employee;
-        });
         _this2.editEmployeeForm = false;
+      });
+    },
+    deleteEmployee: function deleteEmployee(item) {
+      this.deleteEmployeeDialog = true;
+      this.employee = item;
+    },
+    destroyEmployee: function destroyEmployee(item) {
+      var _this3 = this;
+
+      var destroyedEmployee = this.employee;
+      console.log(this.employee.id);
+      axios["delete"]('/api/destroy_employee', destroyedEmployee.id).then(function (res) {
+        console.log(res);
+        _this3.deleteEmployeeDialog = false;
+      })["catch"](function (err) {
+        console.log(err);
       });
     }
   }
@@ -38633,6 +38656,20 @@ var render = function() {
                               },
                               [_c("v-icon", [_vm._v("mdi-pencil")])],
                               1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: { text: "", icon: "", color: "red" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteEmployee(item)
+                                  }
+                                }
+                              },
+                              [_c("v-icon", [_vm._v("mdi-delete")])],
+                              1
                             )
                           ],
                           1
@@ -38727,6 +38764,8 @@ var render = function() {
               _c(
                 "v-card-actions",
                 [
+                  _c("div", { staticClass: "flex-grow-1" }),
+                  _vm._v(" "),
                   _c(
                     "v-btn",
                     {
@@ -38965,6 +39004,102 @@ var render = function() {
               1
             )
           ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: { "max-width": "400px" },
+          model: {
+            value: _vm.deleteEmployeeDialog,
+            callback: function($$v) {
+              _vm.deleteEmployeeDialog = $$v
+            },
+            expression: "deleteEmployeeDialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-card-title",
+                {
+                  staticClass: "headline grey lighten-2",
+                  attrs: { "primary-title": "" }
+                },
+                [_vm._v("Eliminar empleado")]
+              ),
+              _vm._v(" "),
+              _c("v-card-text", { staticStyle: { "padding-top": "2em" } }, [
+                _c("p", [
+                  _vm._v(
+                    "Desea eliminar el empleado " +
+                      _vm._s(_vm.employee.name) +
+                      " " +
+                      _vm._s(_vm.employee.last_name) +
+                      "?"
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v("Recuerde que esta acción no se puede deshacer")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("div", { staticClass: "flex-grow-1" }),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "blue darken-1", text: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.deleteEmployeeDialog = false
+                        }
+                      }
+                    },
+                    [_vm._v("Cancelar")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "form",
+                    {
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.destroyEmployee(_vm.employee)
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: {
+                            color: "red darken-1",
+                            text: "",
+                            type: "submit"
+                          }
+                        },
+                        [_vm._v("Eliminar")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
         ],
         1
       )

@@ -20,3 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('get_employees', 'API\EmployeeController@getEmployees');
 Route::post('store_employee', 'API\EmployeeController@store');
 Route::put('update_employee', 'API\EmployeeController@update');
+Route::delete('destroy_employee', 'API\EmployeeController@destroy');

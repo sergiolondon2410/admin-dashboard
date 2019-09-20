@@ -19,9 +19,6 @@ class EmployeeController extends Controller
         $position = (is_null($request->position)) ? 'Empleado' : $request->position;
         $area = (is_null($request->area)) ? 'Operativa' : $request->area;
 
-        // $data = new Employee();
-        // 
-
         $data = Employee::create([
             'name' => ucwords(strtolower($request->name)),
             'last_name' => ucwords(strtolower($request->last_name)),
@@ -35,8 +32,7 @@ class EmployeeController extends Controller
         return $data;
     }
 
-    public function update(Request $request)
-    {
+    public function update(Request $request){
         $data = Employee::find($request->id);
         $data->name = ucwords(strtolower($request->name));
         $data->last_name = ucwords(strtolower($request->last_name));
@@ -49,4 +45,12 @@ class EmployeeController extends Controller
         
         return $data;
     }
+
+    public function destroy($id){
+        $data = Employee::find($id)->delete();
+        // $data->delete();
+        // return $data;
+        return $data;
+    }
+
 }

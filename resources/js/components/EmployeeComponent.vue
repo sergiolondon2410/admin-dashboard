@@ -25,6 +25,7 @@
                                 <td class="text-left">
                                     <v-btn text icon @click="showEmployee(item)" color="green"><v-icon>mdi-eye</v-icon></v-btn>
                                     <v-btn text icon @click="editEmployee(item)" color="blue"><v-icon>mdi-pencil</v-icon></v-btn>
+                                    <v-btn text icon @click="deleteEmployee(item)" color="red"><v-icon>mdi-delete</v-icon></v-btn>
                                 </td>
                             </tr>
                         </tbody>
@@ -55,6 +56,7 @@
                 </v-card-text>
                 <v-divider></v-divider>
                 <v-card-actions>
+                    <div class="flex-grow-1"></div>
                     <v-btn color="red darken-1" text @click="showDetail = false" @add-employee="addEmployee">Cerrar</v-btn>
                 </v-card-actions>
             </v-card>
@@ -102,6 +104,23 @@
                 </form>
             </v-card>
         </v-dialog>
+        <v-dialog v-model="deleteEmployeeDialog" max-width="400px">
+            <v-card>
+                <v-card-title class="headline grey lighten-2" primary-title>Eliminar empleado</v-card-title>
+                <v-card-text style="padding-top: 2em;">
+                    <p>Desea eliminar el empleado {{ employee.name }} {{ employee.last_name }}?</p>
+                    <p>Recuerde que esta acción no se puede deshacer</p>
+                </v-card-text>
+                <v-divider></v-divider>
+                <v-card-actions>
+                    <div class="flex-grow-1"></div>
+                    <v-btn color="blue darken-1" text @click="deleteEmployeeDialog = false">Cancelar</v-btn>
+                    <form @submit.prevent="destroyEmployee(employee)">
+                        <v-btn color="red darken-1" text type="submit">Eliminar</v-btn>
+                    </form>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -122,6 +141,7 @@
                 showDetail: false,
                 newEmployee: false,
                 editEmployeeForm: false,
+                deleteEmployeeDialog: false,
             }
         },
         created(){
@@ -142,27 +162,31 @@
                 this.editEmployeeForm = true;
                 this.employee = item;
             },
-            updateEmployee(item){
+            updateEmployee(){
                 if(this.employee.name.trim() === '' || this.employee.last_name.trim() === '' || this.employee.document.trim() === '' || this.employee.email.trim() === '' || this.employee.position.trim() === '' || this.employee.area.trim() === ''){
                     alert('Debes completar todos los campos antes de guardar');
                     return;
                 }
-                console.log(this.employee.name);
                 const updatedEmployee = this.employee;
-                this.employee = {
-                    name: '',
-                    last_name: '',
-                    document: '',
-                    email: '',
-                    position: '',
-                    area: '',
-                    salary: ''
-                };    
                 axios.put('/api/update_employee', updatedEmployee).then((res) =>{
-                    this.employees = this.employees.map(employee => (employee.id === id ? res.data : employee));
                     this.editEmployeeForm = false;
                 })
             },
+            deleteEmployee(item){
+                this.deleteEmployeeDialog = true;
+                this.employee = item;
+            },
+            destroyEmployee(item){
+                const destroyedEmployee = this.employee;
+                console.log(this.employee.id);
+                axios.delete('/api/destroy_employee', destroyedEmployee.id).then((res) =>{
+                    console.log(res);
+                    this.deleteEmployeeDialog = false;
+                })
+                .catch(err =>{
+                    console.log(err);
+                })
+            }
         }
     }
 </script>
