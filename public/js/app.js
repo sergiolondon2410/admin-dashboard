@@ -1993,8 +1993,17 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      console.log(this.employee);
-      axios.post('/api/store_employee', this.employee).then(function (res) {
+      var newEmployee = this.employee;
+      this.employee = {
+        name: '',
+        last_name: '',
+        document: '',
+        email: '',
+        position: '',
+        area: '',
+        salary: ''
+      };
+      axios.post('/api/store_employee', this.Employee).then(function (res) {
         // const employeeSend = res.data;
         // this.$emit('add-employee', employeeSend);
         _this.dialog = false;
@@ -2281,7 +2290,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/api/store_employee', this.employee).then(function (res) {
         // const employeeSend = res.data;
         // this.$emit('add-employee', employeeSend);
-        _this4.dialog = false;
+        _this4.newEmployeeform = false;
       })["catch"](function (err) {
         console.log("Create Employee component error: ".concat(err));
       });

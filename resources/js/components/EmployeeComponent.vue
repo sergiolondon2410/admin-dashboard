@@ -255,7 +255,7 @@
                 axios.post('/api/store_employee', this.employee).then((res) =>{
                     // const employeeSend = res.data;
                     // this.$emit('add-employee', employeeSend);
-                    this.dialog = false;
+                    this.newEmployeeform = false;
                 })
                 .catch((err) =>{
                     console.log(`Create Employee component error: ${err}`);

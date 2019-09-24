@@ -28,7 +28,7 @@ class EmployeeController extends Controller
             'area' => ucwords(strtolower($area)),
             'salary' => $request->salary,
         ]);
-        
+        // return response()->json($data);
         return $data;
     }
 

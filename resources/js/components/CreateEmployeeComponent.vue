@@ -70,9 +70,18 @@
             if(this.employee.name.trim() === '' || this.employee.last_name.trim() === '' || this.employee.document.trim() === '' || this.employee.email.trim() === '' || this.employee.position.trim() === '' || this.employee.area.trim() === '' || this.employee.salary.trim() === ''){
                 alert('Debes completar todos los campos antes de guardar');
                 return;
-            } 
-            console.log(this.employee);
-            axios.post('/api/store_employee', this.employee).then((res) =>{
+            }
+            const newEmployee = this.employee;
+            this.employee = {
+                name: '',
+                last_name: '',
+                document: '',
+                email: '',
+                position: '',
+                area: '',
+                salary: ''
+            };    
+            axios.post('/api/store_employee', this.Employee).then((res) =>{
                 // const employeeSend = res.data;
                 // this.$emit('add-employee', employeeSend);
                 this.dialog = false;
