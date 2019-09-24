@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="600px">
         <template v-slot:activator="{ on }">
-            <v-btn color="primary" dark v-on="on">Agregar usuario</v-btn>
+            <v-btn color="primary" dark v-on="on">Agregar empleado</v-btn>
         </template>
         <v-card>
             <form @submit.prevent="createEmployee">
@@ -13,25 +13,25 @@
                 <v-container>
                     <v-row>
                         <v-col cols="12" sm="6">
-                            <v-text-field label="* Nombre" v-model="employee.name" required></v-text-field>
+                            <v-text-field label="* Nombre" id="name" v-model="employee.name" required></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6">
-                            <v-text-field label="* Apellidos" v-model="employee.last_name" required></v-text-field>
+                            <v-text-field label="* Apellidos" id="last_name" v-model="employee.last_name" required></v-text-field>
                         </v-col>
                         <v-col cols="12">
-                            <v-text-field label="* Email" v-model="employee.email" required></v-text-field>
+                            <v-text-field label="* Email" id="email" v-model="employee.email" required></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6">
-                            <v-text-field label="* Documento" v-model="employee.document" required></v-text-field>
+                            <v-text-field label="* Documento" id="document" v-model="employee.document" required></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6">
-                            <v-text-field label="* Salario" v-model="employee.salary" required></v-text-field>
+                            <v-text-field label="* Salario" id="salary" v-model="employee.salary" required></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6">
-                            <v-text-field label="Cargo" v-model="employee.position"></v-text-field>
+                            <v-text-field label="Cargo" id="position" v-model="employee.position"></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6">
-                            <v-text-field label="Área" v-model="employee.area"></v-text-field>
+                            <v-text-field label="Área" id="area" v-model="employee.area"></v-text-field>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -70,22 +70,16 @@
             if(this.employee.name.trim() === '' || this.employee.last_name.trim() === '' || this.employee.document.trim() === '' || this.employee.email.trim() === '' || this.employee.position.trim() === '' || this.employee.area.trim() === '' || this.employee.salary.trim() === ''){
                 alert('Debes completar todos los campos antes de guardar');
                 return;
-            }
-            const newEmployee = this.employee;
-            this.employee = {
-                name: '',
-                last_name: '',
-                document: '',
-                email: '',
-                position: '',
-                area: '',
-                salary: ''
-            };    
-            axios.post('/api/store_employee', newEmployee).then((res) =>{
-                const employeeSend = res.data;
-                this.$emit('add-employee', employeeSend);
+            } 
+            console.log(this.employee);
+            axios.post('/api/store_employee', this.employee).then((res) =>{
+                // const employeeSend = res.data;
+                // this.$emit('add-employee', employeeSend);
                 this.dialog = false;
             })
+            .catch((err) =>{
+                console.log(`Create Employee component error: ${err}`);
+            });
         },
     }
   }

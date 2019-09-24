@@ -16,7 +16,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in employees" :key="item.id">
+                            <tr v-for="(item, index) in employees" :key="index">
                                 <td class="text-left">{{ item.name }} {{ item.last_name }}</td>
                                 <td class="text-left">{{ item.document }}</td>
                                 <td class="text-left">{{ item.salary }}</td>
@@ -25,14 +25,16 @@
                                 <td class="text-left">
                                     <v-btn text icon @click="showEmployee(item)" color="green"><v-icon>mdi-eye</v-icon></v-btn>
                                     <v-btn text icon @click="editEmployee(item)" color="blue"><v-icon>mdi-pencil</v-icon></v-btn>
-                                    <v-btn text icon @click="deleteEmployee(item)" color="red"><v-icon>mdi-delete</v-icon></v-btn>
+                                    <v-btn text icon @click="deleteEmployee(item, index)" color="red"><v-icon>mdi-delete</v-icon></v-btn>
                                 </td>
                             </tr>
                         </tbody>
                     </v-simple-table>
                     <v-divider></v-divider>
                     <v-card-actions>
-                        <create-employee-component/>
+                        <v-btn class="mx-2" fab dark color="indigo" @click="newEmployee()">
+                            <v-icon dark>mdi-plus</v-icon>
+                        </v-btn>
                     </v-card-actions>
                 </v-card>    
             </div>
@@ -121,6 +123,49 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+    <v-dialog v-model="newEmployeeform" persistent max-width="600px">
+        <v-card>
+            <form @submit.prevent="createEmployee">
+            <v-card-title>
+                <span class="headline">Agregar empleado 2</span>
+            </v-card-title>
+            <v-card-text>
+                <v-container>
+                    <v-row>
+                        <v-col cols="12" sm="6">
+                            <v-text-field label="* Nombre" id="name" v-model="employee.name" required></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6">
+                            <v-text-field label="* Apellidos" id="last_name" v-model="employee.last_name" required></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                            <v-text-field label="* Email" id="email" v-model="employee.email" required></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6">
+                            <v-text-field label="* Documento" id="document" v-model="employee.document" required></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6">
+                            <v-text-field label="* Salario" id="salary" v-model="employee.salary" required></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6">
+                            <v-text-field label="Cargo" id="position" v-model="employee.position"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6">
+                            <v-text-field label="Área" id="area" v-model="employee.area"></v-text-field>
+                        </v-col>
+                    </v-row>
+                </v-container>
+                <small>* campos obligatorios</small>
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions>
+                <div class="flex-grow-1"></div>
+                <v-btn color="red darken-1" text @click="newEmployeeform = false">Cancelar</v-btn>
+                <v-btn color="green darken-1" text type="submit">Guardar</v-btn>
+            </v-card-actions>
+            </form>
+        </v-card>
+    </v-dialog>
     </div>
 </template>
 
@@ -139,9 +184,10 @@
                 },
                 employees: [],
                 showDetail: false,
-                newEmployee: false,
+                newEmployeeform: false,
                 editEmployeeForm: false,
                 deleteEmployeeDialog: false,
+                indexDelete: 0,
             }
         },
         created(){
@@ -172,20 +218,48 @@
                     this.editEmployeeForm = false;
                 })
             },
-            deleteEmployee(item){
+            deleteEmployee(item, index){
                 this.deleteEmployeeDialog = true;
                 this.employee = item;
+                this.indexDelete = index;
             },
             destroyEmployee(item){
                 const destroyedEmployee = this.employee;
-                console.log(this.employee.id);
-                axios.delete('/api/destroy_employee', destroyedEmployee.id).then((res) =>{
-                    console.log(res);
+                let url = '/api/destroy_employee/' + destroyedEmployee.id;
+                axios.delete(url, destroyedEmployee).then((res) =>{
                     this.deleteEmployeeDialog = false;
+                    this.employees.splice(this.indexDelete, 1);
                 })
                 .catch(err =>{
                     console.log(err);
                 })
+            },
+            newEmployee(){
+                this.employee = {
+                    name: '',
+                    last_name: '',
+                    document: '',
+                    email: '',
+                    position: '',
+                    area: '',
+                    salary: ''
+                };
+                this.newEmployeeform = true;
+            },
+            createEmployee(){
+                if(this.employee.name.trim() === '' || this.employee.last_name.trim() === '' || this.employee.document.trim() === '' || this.employee.email.trim() === '' || this.employee.position.trim() === '' || this.employee.area.trim() === '' || this.employee.salary.trim() === ''){
+                    alert('Debes completar todos los campos antes de guardar');
+                    return;
+                }
+                console.log(this.employee);
+                axios.post('/api/store_employee', this.employee).then((res) =>{
+                    // const employeeSend = res.data;
+                    // this.$emit('add-employee', employeeSend);
+                    this.dialog = false;
+                })
+                .catch((err) =>{
+                    console.log(`Create Employee component error: ${err}`);
+                });
             }
         }
     }

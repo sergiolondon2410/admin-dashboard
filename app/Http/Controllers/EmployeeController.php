@@ -11,6 +11,19 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = Employee::all();
-        return view('welcome', compact('employees'));
+        // dd($employees);
+
+        return view('employees.index', compact('employees'));
+    }
+
+    // public function show(){
+        
+    // }
+
+    public function destroy(Request $request, $id)
+    {
+        $employee = Employee::find($id);
+        $employee->delete();
+        return redirect()->route('employees.index');
     }
 }

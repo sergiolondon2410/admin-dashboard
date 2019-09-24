@@ -1993,22 +1993,13 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      var newEmployee = this.employee;
-      this.employee = {
-        name: '',
-        last_name: '',
-        document: '',
-        email: '',
-        position: '',
-        area: '',
-        salary: ''
-      };
-      axios.post('/api/store_employee', newEmployee).then(function (res) {
-        var employeeSend = res.data;
-
-        _this.$emit('add-employee', employeeSend);
-
+      console.log(this.employee);
+      axios.post('/api/store_employee', this.employee).then(function (res) {
+        // const employeeSend = res.data;
+        // this.$emit('add-employee', employeeSend);
         _this.dialog = false;
+      })["catch"](function (err) {
+        console.log("Create Employee component error: ".concat(err));
       });
     }
   }
@@ -2151,6 +2142,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2165,9 +2201,10 @@ __webpack_require__.r(__webpack_exports__);
       },
       employees: [],
       showDetail: false,
-      newEmployee: false,
+      newEmployeeform: false,
       editEmployeeForm: false,
-      deleteEmployeeDialog: false
+      deleteEmployeeDialog: false,
+      indexDelete: 0
     };
   },
   created: function created() {
@@ -2202,20 +2239,51 @@ __webpack_require__.r(__webpack_exports__);
         _this2.editEmployeeForm = false;
       });
     },
-    deleteEmployee: function deleteEmployee(item) {
+    deleteEmployee: function deleteEmployee(item, index) {
       this.deleteEmployeeDialog = true;
       this.employee = item;
+      this.indexDelete = index;
     },
     destroyEmployee: function destroyEmployee(item) {
       var _this3 = this;
 
       var destroyedEmployee = this.employee;
-      console.log(this.employee.id);
-      axios["delete"]('/api/destroy_employee', destroyedEmployee.id).then(function (res) {
-        console.log(res);
+      var url = '/api/destroy_employee/' + destroyedEmployee.id;
+      axios["delete"](url, destroyedEmployee).then(function (res) {
         _this3.deleteEmployeeDialog = false;
+
+        _this3.employees.splice(_this3.indexDelete, 1);
       })["catch"](function (err) {
         console.log(err);
+      });
+    },
+    newEmployee: function newEmployee() {
+      this.employee = {
+        name: '',
+        last_name: '',
+        document: '',
+        email: '',
+        position: '',
+        area: '',
+        salary: ''
+      };
+      this.newEmployeeform = true;
+    },
+    createEmployee: function createEmployee() {
+      var _this4 = this;
+
+      if (this.employee.name.trim() === '' || this.employee.last_name.trim() === '' || this.employee.document.trim() === '' || this.employee.email.trim() === '' || this.employee.position.trim() === '' || this.employee.area.trim() === '' || this.employee.salary.trim() === '') {
+        alert('Debes completar todos los campos antes de guardar');
+        return;
+      }
+
+      console.log(this.employee);
+      axios.post('/api/store_employee', this.employee).then(function (res) {
+        // const employeeSend = res.data;
+        // this.$emit('add-employee', employeeSend);
+        _this4.dialog = false;
+      })["catch"](function (err) {
+        console.log("Create Employee component error: ".concat(err));
       });
     }
   }
@@ -38321,7 +38389,7 @@ var render = function() {
                   _c(
                     "v-btn",
                     _vm._g({ attrs: { color: "primary", dark: "" } }, on),
-                    [_vm._v("Agregar usuario")]
+                    [_vm._v("Agregar empleado")]
                   )
                 ]
               }
@@ -38369,7 +38437,11 @@ var render = function() {
                               { attrs: { cols: "12", sm: "6" } },
                               [
                                 _c("v-text-field", {
-                                  attrs: { label: "* Nombre", required: "" },
+                                  attrs: {
+                                    label: "* Nombre",
+                                    id: "name",
+                                    required: ""
+                                  },
                                   model: {
                                     value: _vm.employee.name,
                                     callback: function($$v) {
@@ -38387,7 +38459,11 @@ var render = function() {
                               { attrs: { cols: "12", sm: "6" } },
                               [
                                 _c("v-text-field", {
-                                  attrs: { label: "* Apellidos", required: "" },
+                                  attrs: {
+                                    label: "* Apellidos",
+                                    id: "last_name",
+                                    required: ""
+                                  },
                                   model: {
                                     value: _vm.employee.last_name,
                                     callback: function($$v) {
@@ -38405,7 +38481,11 @@ var render = function() {
                               { attrs: { cols: "12" } },
                               [
                                 _c("v-text-field", {
-                                  attrs: { label: "* Email", required: "" },
+                                  attrs: {
+                                    label: "* Email",
+                                    id: "email",
+                                    required: ""
+                                  },
                                   model: {
                                     value: _vm.employee.email,
                                     callback: function($$v) {
@@ -38423,7 +38503,11 @@ var render = function() {
                               { attrs: { cols: "12", sm: "6" } },
                               [
                                 _c("v-text-field", {
-                                  attrs: { label: "* Documento", required: "" },
+                                  attrs: {
+                                    label: "* Documento",
+                                    id: "document",
+                                    required: ""
+                                  },
                                   model: {
                                     value: _vm.employee.document,
                                     callback: function($$v) {
@@ -38441,7 +38525,11 @@ var render = function() {
                               { attrs: { cols: "12", sm: "6" } },
                               [
                                 _c("v-text-field", {
-                                  attrs: { label: "* Salario", required: "" },
+                                  attrs: {
+                                    label: "* Salario",
+                                    id: "salary",
+                                    required: ""
+                                  },
                                   model: {
                                     value: _vm.employee.salary,
                                     callback: function($$v) {
@@ -38459,7 +38547,7 @@ var render = function() {
                               { attrs: { cols: "12", sm: "6" } },
                               [
                                 _c("v-text-field", {
-                                  attrs: { label: "Cargo" },
+                                  attrs: { label: "Cargo", id: "position" },
                                   model: {
                                     value: _vm.employee.position,
                                     callback: function($$v) {
@@ -38477,7 +38565,7 @@ var render = function() {
                               { attrs: { cols: "12", sm: "6" } },
                               [
                                 _c("v-text-field", {
-                                  attrs: { label: "Área" },
+                                  attrs: { label: "Área", id: "area" },
                                   model: {
                                     value: _vm.employee.area,
                                     callback: function($$v) {
@@ -38602,8 +38690,8 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "tbody",
-                    _vm._l(_vm.employees, function(item) {
-                      return _c("tr", { key: item.id }, [
+                    _vm._l(_vm.employees, function(item, index) {
+                      return _c("tr", { key: index }, [
                         _c("td", { staticClass: "text-left" }, [
                           _vm._v(
                             _vm._s(item.name) + " " + _vm._s(item.last_name)
@@ -38664,7 +38752,7 @@ var render = function() {
                                 attrs: { text: "", icon: "", color: "red" },
                                 on: {
                                   click: function($event) {
-                                    return _vm.deleteEmployee(item)
+                                    return _vm.deleteEmployee(item, index)
                                   }
                                 }
                               },
@@ -38682,7 +38770,30 @@ var render = function() {
                 _vm._v(" "),
                 _c("v-divider"),
                 _vm._v(" "),
-                _c("v-card-actions", [_c("create-employee-component")], 1)
+                _c(
+                  "v-card-actions",
+                  [
+                    _c(
+                      "v-btn",
+                      {
+                        staticClass: "mx-2",
+                        attrs: { fab: "", dark: "", color: "indigo" },
+                        on: {
+                          click: function($event) {
+                            return _vm.newEmployee()
+                          }
+                        }
+                      },
+                      [
+                        _c("v-icon", { attrs: { dark: "" } }, [
+                          _vm._v("mdi-plus")
+                        ])
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
               ],
               1
             )
@@ -39100,6 +39211,245 @@ var render = function() {
             ],
             1
           )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: { persistent: "", "max-width": "600px" },
+          model: {
+            value: _vm.newEmployeeform,
+            callback: function($$v) {
+              _vm.newEmployeeform = $$v
+            },
+            expression: "newEmployeeform"
+          }
+        },
+        [
+          _c("v-card", [
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.createEmployee($event)
+                  }
+                }
+              },
+              [
+                _c("v-card-title", [
+                  _c("span", { staticClass: "headline" }, [
+                    _vm._v("Agregar empleado 2")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "v-card-text",
+                  [
+                    _c(
+                      "v-container",
+                      [
+                        _c(
+                          "v-row",
+                          [
+                            _c(
+                              "v-col",
+                              { attrs: { cols: "12", sm: "6" } },
+                              [
+                                _c("v-text-field", {
+                                  attrs: {
+                                    label: "* Nombre",
+                                    id: "name",
+                                    required: ""
+                                  },
+                                  model: {
+                                    value: _vm.employee.name,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.employee, "name", $$v)
+                                    },
+                                    expression: "employee.name"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-col",
+                              { attrs: { cols: "12", sm: "6" } },
+                              [
+                                _c("v-text-field", {
+                                  attrs: {
+                                    label: "* Apellidos",
+                                    id: "last_name",
+                                    required: ""
+                                  },
+                                  model: {
+                                    value: _vm.employee.last_name,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.employee, "last_name", $$v)
+                                    },
+                                    expression: "employee.last_name"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-col",
+                              { attrs: { cols: "12" } },
+                              [
+                                _c("v-text-field", {
+                                  attrs: {
+                                    label: "* Email",
+                                    id: "email",
+                                    required: ""
+                                  },
+                                  model: {
+                                    value: _vm.employee.email,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.employee, "email", $$v)
+                                    },
+                                    expression: "employee.email"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-col",
+                              { attrs: { cols: "12", sm: "6" } },
+                              [
+                                _c("v-text-field", {
+                                  attrs: {
+                                    label: "* Documento",
+                                    id: "document",
+                                    required: ""
+                                  },
+                                  model: {
+                                    value: _vm.employee.document,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.employee, "document", $$v)
+                                    },
+                                    expression: "employee.document"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-col",
+                              { attrs: { cols: "12", sm: "6" } },
+                              [
+                                _c("v-text-field", {
+                                  attrs: {
+                                    label: "* Salario",
+                                    id: "salary",
+                                    required: ""
+                                  },
+                                  model: {
+                                    value: _vm.employee.salary,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.employee, "salary", $$v)
+                                    },
+                                    expression: "employee.salary"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-col",
+                              { attrs: { cols: "12", sm: "6" } },
+                              [
+                                _c("v-text-field", {
+                                  attrs: { label: "Cargo", id: "position" },
+                                  model: {
+                                    value: _vm.employee.position,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.employee, "position", $$v)
+                                    },
+                                    expression: "employee.position"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-col",
+                              { attrs: { cols: "12", sm: "6" } },
+                              [
+                                _c("v-text-field", {
+                                  attrs: { label: "Área", id: "area" },
+                                  model: {
+                                    value: _vm.employee.area,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.employee, "area", $$v)
+                                    },
+                                    expression: "employee.area"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("small", [_vm._v("* campos obligatorios")])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("v-divider"),
+                _vm._v(" "),
+                _c(
+                  "v-card-actions",
+                  [
+                    _c("div", { staticClass: "flex-grow-1" }),
+                    _vm._v(" "),
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: { color: "red darken-1", text: "" },
+                        on: {
+                          click: function($event) {
+                            _vm.newEmployeeform = false
+                          }
+                        }
+                      },
+                      [_vm._v("Cancelar")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: {
+                          color: "green darken-1",
+                          text: "",
+                          type: "submit"
+                        }
+                      },
+                      [_vm._v("Guardar")]
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ])
         ],
         1
       )

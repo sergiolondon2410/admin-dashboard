@@ -46,11 +46,9 @@ class EmployeeController extends Controller
         return $data;
     }
 
-    public function destroy($id){
+    public function destroy(Request $request, $id){
         $data = Employee::find($id)->delete();
-        // $data->delete();
-        // return $data;
-        return $data;
+        return response()->json($data);
     }
 
 }
