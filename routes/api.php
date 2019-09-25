@@ -21,3 +21,5 @@ Route::get('get_employees', 'API\EmployeeController@getEmployees');
 Route::post('store_employee', 'API\EmployeeController@store');
 Route::put('update_employee', 'API\EmployeeController@update');
 Route::delete('destroy_employee/{employee}', 'API\EmployeeController@destroy');
+
+Route::get('get_users', 'API\UserController@getUsers');

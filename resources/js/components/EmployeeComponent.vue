@@ -8,8 +8,7 @@
                         <thead>
                             <tr>
                                 <th>Empleado</th>
-                                <th>Documento</th>
-                                <th>Salario</th>
+                                <th>Correo</th>
                                 <th>Cargo</th>
                                 <th>Área</th>
                                 <th>Acciones</th>
@@ -18,8 +17,7 @@
                         <tbody>
                             <tr v-for="(item, index) in employees" :key="index">
                                 <td class="text-left">{{ item.name }} {{ item.last_name }}</td>
-                                <td class="text-left">{{ item.document }}</td>
-                                <td class="text-left">{{ item.salary }}</td>
+                                <td class="text-left">{{ item.email }}</td>
                                 <td class="text-left">{{ item.position }}</td>
                                 <td class="text-left">{{ item.area }}</td>
                                 <td class="text-left">
@@ -251,11 +249,11 @@
                     alert('Debes completar todos los campos antes de guardar');
                     return;
                 }
-                console.log(this.employee);
-                axios.post('/api/store_employee', this.employee).then((res) =>{
+                axios.post('api/store_employee', this.employee).then((res) =>{
                     // const employeeSend = res.data;
                     // this.$emit('add-employee', employeeSend);
                     this.newEmployeeform = false;
+                    this.employees.push(this.employee);
                 })
                 .catch((err) =>{
                     console.log(`Create Employee component error: ${err}`);

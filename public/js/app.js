@@ -1909,113 +1909,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateEmployeeComponent.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateEmployeeComponent.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      dialog: false,
-      employee: {
-        name: '',
-        last_name: '',
-        document: '',
-        email: '',
-        position: '',
-        area: '',
-        salary: ''
-      }
-    };
-  },
-  methods: {
-    createEmployee: function createEmployee() {
-      var _this = this;
-
-      if (this.employee.name.trim() === '' || this.employee.last_name.trim() === '' || this.employee.document.trim() === '' || this.employee.email.trim() === '' || this.employee.position.trim() === '' || this.employee.area.trim() === '' || this.employee.salary.trim() === '') {
-        alert('Debes completar todos los campos antes de guardar');
-        return;
-      }
-
-      var newEmployee = this.employee;
-      this.employee = {
-        name: '',
-        last_name: '',
-        document: '',
-        email: '',
-        position: '',
-        area: '',
-        salary: ''
-      };
-      axios.post('/api/store_employee', this.Employee).then(function (res) {
-        // const employeeSend = res.data;
-        // this.$emit('add-employee', employeeSend);
-        _this.dialog = false;
-      })["catch"](function (err) {
-        console.log("Create Employee component error: ".concat(err));
-      });
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EmployeeComponent.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EmployeeComponent.vue?vue&type=script&lang=js& ***!
@@ -2025,8 +1918,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -2286,11 +2177,12 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      console.log(this.employee);
-      axios.post('/api/store_employee', this.employee).then(function (res) {
+      axios.post('api/store_employee', this.employee).then(function (res) {
         // const employeeSend = res.data;
         // this.$emit('add-employee', employeeSend);
         _this4.newEmployeeform = false;
+
+        _this4.employees.push(_this4.employee);
       })["catch"](function (err) {
         console.log("Create Employee component error: ".concat(err));
       });
@@ -38366,290 +38258,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateEmployeeComponent.vue?vue&type=template&id=47da8390&":
-/*!**************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreateEmployeeComponent.vue?vue&type=template&id=47da8390& ***!
-  \**************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-row",
-    { attrs: { justify: "center" } },
-    [
-      _c(
-        "v-dialog",
-        {
-          attrs: { persistent: "", "max-width": "600px" },
-          scopedSlots: _vm._u([
-            {
-              key: "activator",
-              fn: function(ref) {
-                var on = ref.on
-                return [
-                  _c(
-                    "v-btn",
-                    _vm._g({ attrs: { color: "primary", dark: "" } }, on),
-                    [_vm._v("Agregar empleado")]
-                  )
-                ]
-              }
-            }
-          ]),
-          model: {
-            value: _vm.dialog,
-            callback: function($$v) {
-              _vm.dialog = $$v
-            },
-            expression: "dialog"
-          }
-        },
-        [
-          _vm._v(" "),
-          _c("v-card", [
-            _c(
-              "form",
-              {
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.createEmployee($event)
-                  }
-                }
-              },
-              [
-                _c("v-card-title", [
-                  _c("span", { staticClass: "headline" }, [
-                    _vm._v("Agregar empleado")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "v-card-text",
-                  [
-                    _c(
-                      "v-container",
-                      [
-                        _c(
-                          "v-row",
-                          [
-                            _c(
-                              "v-col",
-                              { attrs: { cols: "12", sm: "6" } },
-                              [
-                                _c("v-text-field", {
-                                  attrs: {
-                                    label: "* Nombre",
-                                    id: "name",
-                                    required: ""
-                                  },
-                                  model: {
-                                    value: _vm.employee.name,
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.employee, "name", $$v)
-                                    },
-                                    expression: "employee.name"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-col",
-                              { attrs: { cols: "12", sm: "6" } },
-                              [
-                                _c("v-text-field", {
-                                  attrs: {
-                                    label: "* Apellidos",
-                                    id: "last_name",
-                                    required: ""
-                                  },
-                                  model: {
-                                    value: _vm.employee.last_name,
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.employee, "last_name", $$v)
-                                    },
-                                    expression: "employee.last_name"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-col",
-                              { attrs: { cols: "12" } },
-                              [
-                                _c("v-text-field", {
-                                  attrs: {
-                                    label: "* Email",
-                                    id: "email",
-                                    required: ""
-                                  },
-                                  model: {
-                                    value: _vm.employee.email,
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.employee, "email", $$v)
-                                    },
-                                    expression: "employee.email"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-col",
-                              { attrs: { cols: "12", sm: "6" } },
-                              [
-                                _c("v-text-field", {
-                                  attrs: {
-                                    label: "* Documento",
-                                    id: "document",
-                                    required: ""
-                                  },
-                                  model: {
-                                    value: _vm.employee.document,
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.employee, "document", $$v)
-                                    },
-                                    expression: "employee.document"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-col",
-                              { attrs: { cols: "12", sm: "6" } },
-                              [
-                                _c("v-text-field", {
-                                  attrs: {
-                                    label: "* Salario",
-                                    id: "salary",
-                                    required: ""
-                                  },
-                                  model: {
-                                    value: _vm.employee.salary,
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.employee, "salary", $$v)
-                                    },
-                                    expression: "employee.salary"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-col",
-                              { attrs: { cols: "12", sm: "6" } },
-                              [
-                                _c("v-text-field", {
-                                  attrs: { label: "Cargo", id: "position" },
-                                  model: {
-                                    value: _vm.employee.position,
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.employee, "position", $$v)
-                                    },
-                                    expression: "employee.position"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-col",
-                              { attrs: { cols: "12", sm: "6" } },
-                              [
-                                _c("v-text-field", {
-                                  attrs: { label: "Área", id: "area" },
-                                  model: {
-                                    value: _vm.employee.area,
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.employee, "area", $$v)
-                                    },
-                                    expression: "employee.area"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("small", [_vm._v("* campos obligatorios")])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("v-divider"),
-                _vm._v(" "),
-                _c(
-                  "v-card-actions",
-                  [
-                    _c("div", { staticClass: "flex-grow-1" }),
-                    _vm._v(" "),
-                    _c(
-                      "v-btn",
-                      {
-                        attrs: { color: "red darken-1", text: "" },
-                        on: {
-                          click: function($event) {
-                            _vm.dialog = false
-                          }
-                        }
-                      },
-                      [_vm._v("Cancelar")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "v-btn",
-                      {
-                        attrs: {
-                          color: "green darken-1",
-                          text: "",
-                          type: "submit"
-                        }
-                      },
-                      [_vm._v("Guardar")]
-                    )
-                  ],
-                  1
-                )
-              ],
-              1
-            )
-          ])
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EmployeeComponent.vue?vue&type=template&id=20dc3794&":
 /*!********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EmployeeComponent.vue?vue&type=template&id=20dc3794& ***!
@@ -38685,9 +38293,7 @@ var render = function() {
                     _c("tr", [
                       _c("th", [_vm._v("Empleado")]),
                       _vm._v(" "),
-                      _c("th", [_vm._v("Documento")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Salario")]),
+                      _c("th", [_vm._v("Correo")]),
                       _vm._v(" "),
                       _c("th", [_vm._v("Cargo")]),
                       _vm._v(" "),
@@ -38708,11 +38314,7 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("td", { staticClass: "text-left" }, [
-                          _vm._v(_vm._s(item.document))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "text-left" }, [
-                          _vm._v(_vm._s(item.salary))
+                          _vm._v(_vm._s(item.email))
                         ]),
                         _vm._v(" "),
                         _c("td", { staticClass: "text-left" }, [
@@ -91053,8 +90655,8 @@ Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
 Vue.use(vuetify__WEBPACK_IMPORTED_MODULE_1___default.a);
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('employee-component', __webpack_require__(/*! ./components/EmployeeComponent.vue */ "./resources/js/components/EmployeeComponent.vue")["default"]);
-Vue.component('baseline-component', __webpack_require__(/*! ./components/BaselineComponent.vue */ "./resources/js/components/BaselineComponent.vue")["default"]);
-Vue.component('create-employee-component', __webpack_require__(/*! ./components/CreateEmployeeComponent.vue */ "./resources/js/components/CreateEmployeeComponent.vue")["default"]);
+Vue.component('baseline-component', __webpack_require__(/*! ./components/BaselineComponent.vue */ "./resources/js/components/BaselineComponent.vue")["default"]); // Vue.component('create-employee-component', require('./components/CreateEmployeeComponent.vue').default);
+
 var app = new Vue({
   el: '#app',
   vuetify: new vuetify__WEBPACK_IMPORTED_MODULE_1___default.a({
@@ -91062,7 +90664,8 @@ var app = new Vue({
       iconfont: 'mdiSvg' // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4'
 
     }
-  })
+  }) // router,
+
 });
 
 /***/ }),
@@ -91189,75 +90792,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BaselineComponent_vue_vue_type_template_id_4618855d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BaselineComponent_vue_vue_type_template_id_4618855d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/CreateEmployeeComponent.vue":
-/*!*************************************************************!*\
-  !*** ./resources/js/components/CreateEmployeeComponent.vue ***!
-  \*************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CreateEmployeeComponent_vue_vue_type_template_id_47da8390___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateEmployeeComponent.vue?vue&type=template&id=47da8390& */ "./resources/js/components/CreateEmployeeComponent.vue?vue&type=template&id=47da8390&");
-/* harmony import */ var _CreateEmployeeComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateEmployeeComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/CreateEmployeeComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _CreateEmployeeComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _CreateEmployeeComponent_vue_vue_type_template_id_47da8390___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _CreateEmployeeComponent_vue_vue_type_template_id_47da8390___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/CreateEmployeeComponent.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/CreateEmployeeComponent.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************!*\
-  !*** ./resources/js/components/CreateEmployeeComponent.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateEmployeeComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CreateEmployeeComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateEmployeeComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateEmployeeComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/CreateEmployeeComponent.vue?vue&type=template&id=47da8390&":
-/*!********************************************************************************************!*\
-  !*** ./resources/js/components/CreateEmployeeComponent.vue?vue&type=template&id=47da8390& ***!
-  \********************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateEmployeeComponent_vue_vue_type_template_id_47da8390___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CreateEmployeeComponent.vue?vue&type=template&id=47da8390& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreateEmployeeComponent.vue?vue&type=template&id=47da8390&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateEmployeeComponent_vue_vue_type_template_id_47da8390___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateEmployeeComponent_vue_vue_type_template_id_47da8390___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
