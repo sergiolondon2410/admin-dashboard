@@ -79,9 +79,9 @@
                 email: '',
                 position: '',
                 area: '',
-                salary: ''
-            };    
-            axios.post('/api/store_employee', this.Employee).then((res) =>{
+                salary: 0
+            };
+            axios.post('/api/store_employee', this.newEmployee).then((res) =>{
                 // const employeeSend = res.data;
                 // this.$emit('add-employee', employeeSend);
                 this.dialog = false;

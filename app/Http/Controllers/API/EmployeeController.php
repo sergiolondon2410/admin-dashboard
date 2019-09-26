@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Employee as Employee;
+use App\Employee;
 
 class EmployeeController extends Controller
 {
@@ -19,6 +19,15 @@ class EmployeeController extends Controller
         $position = (is_null($request->position)) ? 'Empleado' : $request->position;
         $area = (is_null($request->area)) ? 'Operativa' : $request->area;
 
+        $data = Employee::create([
+            'name' => $request->name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'document' => $request->document,
+            'position' => $position,
+            'area' => $area,
+            'salary' => $request->salary
+        ]);
         // $data = Employee::create([
         //     'name' => ucwords(strtolower($request->name)),
         //     'last_name' => ucwords(strtolower($request->last_name)),
@@ -26,20 +35,22 @@ class EmployeeController extends Controller
         //     'document' => $request->document,
         //     'position' => ucwords(strtolower($position)),
         //     'area' => ucwords(strtolower($area)),
-        //     'salary' => $request->salary,
+        //     'salary' => $request->salary
         // ]);
-        $data = new Employee;
-        $data->name = ucwords(strtolower($request->name));
-        $data->last_name = ucwords(strtolower($request->last_name));
-        $data->document = $request->document;
-        $data->email = $request->email;
-        $data->position = ucwords(strtolower($position));
-        $data->area = ucwords(strtolower($area));
-        $data->salary = $request->salary;
-        $data->save();
+
+        // $data = new Employee;
+        // $data->name = ucwords(strtolower($request->name));
+        // $data->last_name = ucwords(strtolower($request->last_name));
+        // $data->document = $request->document;
+        // $data->email = $request->email;
+        // $data->position = ucwords(strtolower($position));
+        // $data->area = ucwords(strtolower($area));
+        // $data->salary = $request->salary;
+        // $data->save();
 
         return response()->json($data);
         return $data;
+        return response()->json(['message' => 'task was successful', 'position' => $position, 'area' => $area ]);
     }
 
     public function update(Request $request){

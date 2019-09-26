@@ -30,6 +30,7 @@
                     </v-simple-table>
                     <v-divider></v-divider>
                     <v-card-actions>
+                        <create-employee-component/>
                         <v-btn class="mx-2" fab dark color="indigo" @click="newEmployee()">
                             <v-icon dark>mdi-plus</v-icon>
                         </v-btn>
@@ -121,7 +122,7 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-    <v-dialog v-model="newEmployeeform" persistent max-width="600px">
+    <v-dialog v-model="newEmployeeForm" persistent max-width="600px">
         <v-card>
             <form @submit.prevent="createEmployee">
             <v-card-title>
@@ -158,7 +159,7 @@
             <v-divider></v-divider>
             <v-card-actions>
                 <div class="flex-grow-1"></div>
-                <v-btn color="red darken-1" text @click="newEmployeeform = false">Cancelar</v-btn>
+                <v-btn color="red darken-1" text @click="newEmployeeForm = false">Cancelar</v-btn>
                 <v-btn color="green darken-1" text type="submit">Guardar</v-btn>
             </v-card-actions>
             </form>
@@ -182,7 +183,7 @@
                 },
                 employees: [],
                 showDetail: false,
-                newEmployeeform: false,
+                newEmployeeForm: false,
                 editEmployeeForm: false,
                 deleteEmployeeDialog: false,
                 indexDelete: 0,
@@ -233,7 +234,27 @@
                 })
             },
             newEmployee(){
-                this.employee = {
+                this.employee = this.clearEmployee();
+                this.newEmployeeForm = true;
+            },
+            createEmployee(){
+                if(this.employee.name.trim() === '' || this.employee.last_name.trim() === '' || this.employee.document.trim() === '' || this.employee.email.trim() === '' || this.employee.position.trim() === '' || this.employee.area.trim() === '' || this.employee.salary.trim() === ''){
+                    alert('Debes completar todos los campos antes de guardar');
+                    return;
+                }
+                axios.post('/api/store_employee', this.employee).then((res) =>{
+                    // this.employee = this.clearEmployee();
+                    console.log(res);
+                    this.newEmployeeForm = false;
+                    this.employees.push(this.employee);
+                    this.employee = this.clearEmployee();
+                })
+                .catch((err) =>{
+                    console.log(`Create Employee component error: ${err}`);
+                });
+            },
+            clearEmployee(){
+                return {
                     name: '',
                     last_name: '',
                     document: '',
@@ -242,22 +263,6 @@
                     area: '',
                     salary: ''
                 };
-                this.newEmployeeform = true;
-            },
-            createEmployee(){
-                if(this.employee.name.trim() === '' || this.employee.last_name.trim() === '' || this.employee.document.trim() === '' || this.employee.email.trim() === '' || this.employee.position.trim() === '' || this.employee.area.trim() === '' || this.employee.salary.trim() === ''){
-                    alert('Debes completar todos los campos antes de guardar');
-                    return;
-                }
-                axios.post('api/store_employee', this.employee).then((res) =>{
-                    // const employeeSend = res.data;
-                    // this.$emit('add-employee', employeeSend);
-                    this.newEmployeeform = false;
-                    this.employees.push(this.employee);
-                })
-                .catch((err) =>{
-                    console.log(`Create Employee component error: ${err}`);
-                });
             }
         }
     }
