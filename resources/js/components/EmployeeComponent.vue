@@ -30,7 +30,6 @@
                     </v-simple-table>
                     <v-divider></v-divider>
                     <v-card-actions>
-                        <create-employee-component/>
                         <v-btn class="mx-2" fab dark color="indigo" @click="newEmployee()">
                             <v-icon dark>mdi-plus</v-icon>
                         </v-btn>
@@ -215,6 +214,10 @@
                 const updatedEmployee = this.employee;
                 axios.put('/api/update_employee', updatedEmployee).then((res) =>{
                     this.editEmployeeForm = false;
+                    console.log(res);
+                })
+                .catch(err =>{
+                    console.log(err);
                 })
             },
             deleteEmployee(item, index){

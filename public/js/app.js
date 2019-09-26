@@ -2194,7 +2194,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2245,6 +2244,9 @@ __webpack_require__.r(__webpack_exports__);
       var updatedEmployee = this.employee;
       axios.put('/api/update_employee', updatedEmployee).then(function (res) {
         _this2.editEmployeeForm = false;
+        console.log(res);
+      })["catch"](function (err) {
+        console.log(err);
       });
     },
     deleteEmployee: function deleteEmployee(item, index) {
@@ -38781,8 +38783,6 @@ var render = function() {
                 _c(
                   "v-card-actions",
                   [
-                    _c("create-employee-component"),
-                    _vm._v(" "),
                     _c(
                       "v-btn",
                       {

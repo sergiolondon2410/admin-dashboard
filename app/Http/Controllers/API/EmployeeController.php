@@ -18,42 +18,23 @@ class EmployeeController extends Controller
     {
         $position = (is_null($request->position)) ? 'Empleado' : $request->position;
         $area = (is_null($request->area)) ? 'Operativa' : $request->area;
+        $salary = (integer)$request->salary;
 
         $data = Employee::create([
-            'name' => $request->name,
-            'last_name' => $request->last_name,
+            'name' => ucwords(strtolower($request->name)),
+            'last_name' => ucwords(strtolower($request->last_name)),
             'email' => $request->email,
             'document' => $request->document,
-            'position' => $position,
-            'area' => $area,
-            'salary' => $request->salary
+            'position' => ucwords(strtolower($position)),
+            'area' => ucwords(strtolower($area)),
+            'salary' => $salary
         ]);
-        // $data = Employee::create([
-        //     'name' => ucwords(strtolower($request->name)),
-        //     'last_name' => ucwords(strtolower($request->last_name)),
-        //     'email' => $request->email,
-        //     'document' => $request->document,
-        //     'position' => ucwords(strtolower($position)),
-        //     'area' => ucwords(strtolower($area)),
-        //     'salary' => $request->salary
-        // ]);
-
-        // $data = new Employee;
-        // $data->name = ucwords(strtolower($request->name));
-        // $data->last_name = ucwords(strtolower($request->last_name));
-        // $data->document = $request->document;
-        // $data->email = $request->email;
-        // $data->position = ucwords(strtolower($position));
-        // $data->area = ucwords(strtolower($area));
-        // $data->salary = $request->salary;
-        // $data->save();
 
         return response()->json($data);
-        return $data;
-        return response()->json(['message' => 'task was successful', 'position' => $position, 'area' => $area ]);
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $data = Employee::find($request->id);
         $data->name = ucwords(strtolower($request->name));
         $data->last_name = ucwords(strtolower($request->last_name));
@@ -64,10 +45,11 @@ class EmployeeController extends Controller
         $data->salary = $request->salary;
         $data->save();
         
-        return $data;
+        return response()->json($data);
     }
 
-    public function destroy(Request $request, $id){
+    public function destroy(Request $request, $id)
+    {
         $data = Employee::find($id)->delete();
         return response()->json($data);
     }
