@@ -2194,6 +2194,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2211,7 +2235,23 @@ __webpack_require__.r(__webpack_exports__);
       newEmployeeForm: false,
       editEmployeeForm: false,
       deleteEmployeeDialog: false,
-      indexDelete: 0
+      indexDelete: 0,
+      search: '',
+      headers: [{
+        text: 'Empleado',
+        value: 'name'
+      }, {
+        text: 'Correo',
+        value: 'email'
+      }, {
+        text: 'Cargo',
+        value: 'position'
+      }, {
+        text: 'Área',
+        value: 'area'
+      }, {
+        text: 'Acciones'
+      }]
     };
   },
   created: function created() {
@@ -38685,7 +38725,11 @@ var render = function() {
               "v-card",
               { staticClass: "mx-auto" },
               [
-                _c("v-card-title", [_vm._v("Listado de empleados")]),
+                _c("v-card-title", [
+                  _vm._v(
+                    "\n                    Listado de empleados\n                "
+                  )
+                ]),
                 _vm._v(" "),
                 _c("v-simple-table", [
                   _c("thead", [
@@ -38804,6 +38848,55 @@ var render = function() {
                   ],
                   1
                 )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-8" },
+          [
+            _c(
+              "v-card",
+              [
+                _c(
+                  "v-card-title",
+                  [
+                    _vm._v(
+                      "\n                    Datatable\n                    "
+                    ),
+                    _c("div", { staticClass: "flex-grow-1" }),
+                    _vm._v(" "),
+                    _c("v-text-field", {
+                      attrs: {
+                        label: "Search",
+                        "single-line": "",
+                        "hide-details": ""
+                      },
+                      model: {
+                        value: _vm.search,
+                        callback: function($$v) {
+                          _vm.search = $$v
+                        },
+                        expression: "search"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("v-data-table", {
+                  attrs: {
+                    headers: _vm.headers,
+                    items: _vm.employees,
+                    search: _vm.search
+                  }
+                })
               ],
               1
             )
@@ -39252,7 +39345,7 @@ var render = function() {
               [
                 _c("v-card-title", [
                   _c("span", { staticClass: "headline" }, [
-                    _vm._v("Agregar empleado 2")
+                    _vm._v("Agregar empleado")
                   ])
                 ]),
                 _vm._v(" "),

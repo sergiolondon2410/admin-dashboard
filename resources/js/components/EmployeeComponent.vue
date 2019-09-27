@@ -3,7 +3,9 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <v-card class="mx-auto">
-                    <v-card-title>Listado de empleados</v-card-title>
+                    <v-card-title>
+                        Listado de empleados
+                    </v-card-title>
                     <v-simple-table>
                         <thead>
                             <tr>
@@ -35,6 +37,28 @@
                         </v-btn>
                     </v-card-actions>
                 </v-card>    
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <v-card>
+                    <v-card-title>
+                        Datatable
+                        <div class="flex-grow-1"></div>
+                        <v-text-field
+                            v-model="search"
+                            label="Search"
+                            single-line
+                            hide-details
+                        ></v-text-field>
+                    </v-card-title>
+                    <v-data-table
+                        :headers="headers"
+                        :items="employees"
+                        :search="search"
+                    ></v-data-table>
+                </v-card>
             </div>
         </div>
 
@@ -125,7 +149,7 @@
         <v-card>
             <form @submit.prevent="createEmployee">
             <v-card-title>
-                <span class="headline">Agregar empleado 2</span>
+                <span class="headline">Agregar empleado</span>
             </v-card-title>
             <v-card-text>
                 <v-container>
@@ -186,6 +210,14 @@
                 editEmployeeForm: false,
                 deleteEmployeeDialog: false,
                 indexDelete: 0,
+                search: '',
+                headers: [
+                    { text: 'Empleado', value: 'name', },
+                    { text: 'Correo', value: 'email' },
+                    { text: 'Cargo', value: 'position' },
+                    { text: 'Área', value: 'area' },
+                    { text: 'Acciones' },
+                ],
             }
         },
         created(){
