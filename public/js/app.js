@@ -1896,6 +1896,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     source: String
@@ -2218,6 +2220,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2235,6 +2242,9 @@ __webpack_require__.r(__webpack_exports__);
       newEmployeeForm: false,
       editEmployeeForm: false,
       deleteEmployeeDialog: false,
+      errorAlert: false,
+      errorMessage: '',
+      errors: [],
       indexDelete: 0,
       search: '',
       headers: [{
@@ -2281,6 +2291,14 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+      if (re.test(email)) {
+        alert('Hola');
+      }
+
+      alert('Hola');
+      this.formValidation();
       var updatedEmployee = this.employee;
       axios.put('/api/update_employee', updatedEmployee).then(function (res) {
         _this2.editEmployeeForm = false;
@@ -2341,6 +2359,26 @@ __webpack_require__.r(__webpack_exports__);
         area: '',
         salary: ''
       };
+    },
+    formValidation: function formValidation() {
+      if (!this.email) {
+        this.errors.push('Email required.');
+      } else if (!this.validEmail(this.email)) {
+        this.errors.push('Valid email required.');
+      }
+
+      if (!this.errors.length) {
+        // return true;
+        this.showErrorAlert('Valid email required.');
+      }
+    },
+    validEmail: function validEmail(email) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
+    showErrorAlert: function showErrorAlert(msg) {
+      this.errorAlert = true;
+      this.errorMessage = msg;
     }
   }
 });
@@ -38312,7 +38350,6 @@ var render = function() {
             [
               _c(
                 "v-list-item",
-                { on: { click: function($event) {} } },
                 [
                   _c(
                     "v-list-item-action",
@@ -38331,7 +38368,6 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-list-item",
-                { on: { click: function($event) {} } },
                 [
                   _c(
                     "v-list-item-action",
@@ -38374,6 +38410,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-content",
+        { staticClass: "pt-0" },
         [
           _c(
             "v-container",
@@ -38716,11 +38753,38 @@ var render = function() {
     "div",
     { staticClass: "container" },
     [
-      _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "row justify-content-center pa-0" }, [
         _c(
           "div",
-          { staticClass: "col-md-8" },
+          { staticClass: "col-md-10" },
           [
+            _c(
+              "div",
+              { staticClass: "row justify-content-left" },
+              [
+                _c(
+                  "v-alert",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errorAlert,
+                        expression: "errorAlert"
+                      }
+                    ],
+                    attrs: { type: "error" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    I'm an error alert.\n                "
+                    )
+                  ]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
             _c(
               "v-card",
               { staticClass: "mx-auto" },

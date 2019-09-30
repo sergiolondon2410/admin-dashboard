@@ -21,8 +21,8 @@ class EmployeeController extends Controller
         $salary = (integer)$request->salary;
 
         $data = Employee::create([
-            'name' => ucwords(strtolower($request->name)),
-            'last_name' => ucwords(strtolower($request->last_name)),
+            'name' => ucwords(mb_strtolower($request->name)),
+            'last_name' => ucwords(mb_strtolower($request->last_name)),
             'email' => $request->email,
             'document' => $request->document,
             'position' => ucwords(strtolower($position)),
@@ -36,8 +36,8 @@ class EmployeeController extends Controller
     public function update(Request $request)
     {
         $data = Employee::find($request->id);
-        $data->name = ucwords(strtolower($request->name));
-        $data->last_name = ucwords(strtolower($request->last_name));
+        $data->name = ucwords(mb_strtolower($request->name));
+        $data->last_name = ucwords(mb_strtolower($request->last_name));
         $data->document = $request->document;
         $data->email = $request->email;
         $data->position = $request->position;

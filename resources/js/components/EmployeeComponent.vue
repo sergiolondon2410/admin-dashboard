@@ -1,7 +1,12 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
+    <div class="container">   
+        <div class="row justify-content-center pa-0">
+            <div class="col-md-10">
+                <div class="row justify-content-left">
+                    <v-alert type="error" v-show="errorAlert">
+                        I'm an error alert.
+                    </v-alert>
+                </div>
                 <v-card class="mx-auto">
                     <v-card-title>
                         Listado de empleados
@@ -209,6 +214,9 @@
                 newEmployeeForm: false,
                 editEmployeeForm: false,
                 deleteEmployeeDialog: false,
+                errorAlert: false,
+                errorMessage: '',
+                errors: [],
                 indexDelete: 0,
                 search: '',
                 headers: [
@@ -243,6 +251,12 @@
                     alert('Debes completar todos los campos antes de guardar');
                     return;
                 }
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                if(re.test(email)){
+                    alert('Hola');
+                }
+                alert('Hola');
+                this.formValidation();
                 const updatedEmployee = this.employee;
                 axios.put('/api/update_employee', updatedEmployee).then((res) =>{
                     this.editEmployeeForm = false;
@@ -298,6 +312,26 @@
                     area: '',
                     salary: ''
                 };
+            },
+            formValidation(){
+                if (!this.email) {
+                    this.errors.push('Email required.');
+                } else if (!this.validEmail(this.email)) {
+                    this.errors.push('Valid email required.');
+                }
+
+                if (!this.errors.length) {
+                    // return true;
+                    this.showErrorAlert('Valid email required.');
+                }
+            },
+            validEmail(email){
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
+            },
+            showErrorAlert(msg){
+                this.errorAlert = true;
+                this.errorMessage = msg;
             }
         }
     }

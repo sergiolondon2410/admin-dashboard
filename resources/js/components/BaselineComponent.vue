@@ -5,7 +5,8 @@
       app
     >
       <v-list dense>
-        <v-list-item @click="">
+        <!-- <v-list-item @click=""> -->
+        <v-list-item>
           <v-list-item-action>
             <v-icon>mdi-home</v-icon>
           </v-list-item-action>
@@ -13,7 +14,8 @@
             <v-list-item-title>Inicio</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item @click="">
+        <!-- <v-list-item @click=""> -->
+        <v-list-item>
           <v-list-item-action>
             <v-icon>mdi-contact-mail</v-icon>
           </v-list-item-action>
@@ -32,7 +34,7 @@
       <v-toolbar-title>Payroll</v-toolbar-title>
     </v-app-bar>
 
-    <v-content>
+    <v-content class="pt-0">
       <v-container
         class="fill-height"
         fluid
